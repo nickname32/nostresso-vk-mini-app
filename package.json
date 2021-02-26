@@ -6,15 +6,15 @@
     "cross-env": "^7.0.3",
     "eslint": "^7.20.0",
     "eslint-plugin-react": "^7.22.0",
-    "react-scripts": "^4.0.2"
+    "react-scripts": "^4.0.3"
   },
   "dependencies": {
-    "@babel/runtime": "^7.12.13",
+    "@babel/runtime": "^7.13.7",
     "@types/react": "^17.0.2",
-    "@vkontakte/icons": "^1.76.0",
+    "@vkontakte/icons": "^1.79.0",
     "@vkontakte/vk-bridge": "^2.4.0",
     "@vkontakte/vkjs": "^0.20.0",
-    "@vkontakte/vkui": "^4.1.0",
+    "@vkontakte/vkui": "^4.2.0",
     "pigeon-maps": "^0.17.1",
     "prop-types": "^15.7.2",
     "react": "^17.0.1",
