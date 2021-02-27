@@ -26,7 +26,9 @@ import {
     getCoffeehouses
 } from '../../backend-api'
 
-function CoffeehouseSelection({ id }) {
+import router from '../../router'
+
+function Selection({ id }) {
     const [activeTab, setActiveTab] = useState('map')
     const [coffeehouses, setCoffeehouses] = useState([])
     const [searchString, setSearchString] = useState('')
@@ -83,10 +85,16 @@ function CoffeehouseSelection({ id }) {
                                         }
 
                                         return (
-                                            <Overlay anchor={coffeehouse.coordinates}>
-                                                <Avatar src={coffeehouse.image} onClick={() => {
-                                                    console.log(coffeehouse)
-                                                }} />
+                                            <Overlay
+                                                key={`${coffeehouse.name} ${coffeehouse.address}`}
+                                                anchor={coffeehouse.coordinates}
+                                            >
+                                                <Avatar
+                                                    src={coffeehouse.image}
+                                                    onClick={() => {
+                                                        router.go('coffeehouses.order')
+                                                    }}
+                                                />
                                             </Overlay>
                                         )
                                     })}
@@ -105,10 +113,14 @@ function CoffeehouseSelection({ id }) {
 
                                         return (
                                             <ContentCard
+                                                key={`${coffeehouse.name} ${coffeehouse.address}`}
                                                 image={coffeehouse.image}
                                                 header={coffeehouse.name}
                                                 text={coffeehouse.address}
                                                 maxHeight={144}
+                                                onClick={() => {
+                                                    router.go('coffeehouses.order')
+                                                }}
                                             />
                                         )
                                     })}
@@ -123,8 +135,8 @@ function CoffeehouseSelection({ id }) {
     )
 }
 
-CoffeehouseSelection.propTypes = {
+Selection.propTypes = {
     id: PropTypes.string.isRequired,
 }
 
-export default CoffeehouseSelection
+export default Selection

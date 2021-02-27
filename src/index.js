@@ -29,23 +29,40 @@ import {
 	Favorites,
 } from './views'
 
+import router from './router'
+
 function App() {
-	const [activeStory, setActiveStory] = useState("coffeehouses")
 	const [scheme, setScheme] = useState(null)
 
+	const [activeStory, setActiveStory] = useState('coffeehouses')
+
 	useEffect(() => {
-		const handler = ({ detail: { type, data } }) => {
+		const routerUnsubscribe = router.subscribe(({ toState }) => {
+			let routerStatePage = toState.page
+
+			let index = routerStatePage.indexOf('.')
+			if (index !== -1) {
+				routerStatePage = routerStatePage.substring(0, index)
+			}
+
+			setActiveStory(routerStatePage)
+		})
+
+		const themeUpdateHandler = ({ detail: { type, data } }) => {
 			if (type !== 'VKWebAppUpdateConfig') {
 				return
 			}
 
 			setScheme(data.scheme)
 		}
-		vkBridge.subscribe(handler)
+		vkBridge.subscribe(themeUpdateHandler)
 
 		vkBridge.send('VKWebAppInit')
 
-		return () => { vkBridge.unsubscribe(handler) }
+		return () => {
+			routerUnsubscribe()
+			vkBridge.unsubscribe(themeUpdateHandler)
+		}
 	}, [])
 
 	return (
@@ -56,23 +73,23 @@ function App() {
 						activeStory={activeStory}
 						tabbar={<Tabbar>
 							<TabbarItem
-								onClick={() => setActiveStory('coffeehouses')}
-								selected={activeStory === 'coffeehouses'}
+								onClick={activeStory.indexOf('coffeehouses') !== 0 ? () => router.go('coffeehouses') : null}
+								selected={activeStory.indexOf('coffeehouses') === 0}
 								text="Кофейни"
 							><Icon28SearchOutline /></TabbarItem>
 							<TabbarItem
-								onClick={() => setActiveStory('favorites')}
-								selected={activeStory === 'favorites'}
+								onClick={activeStory.indexOf('favorites') !== 0 ? () => router.go('favorites') : null}
+								selected={activeStory.indexOf('favorites') === 0}
 								text="Избранное"
 							><Icon28FavoriteOutline /></TabbarItem>
 							<TabbarItem
-								onClick={() => setActiveStory('orders')}
-								selected={activeStory === 'orders'}
+								onClick={activeStory.indexOf('orders') !== 0 ? () => router.go('orders') : null}
+								selected={activeStory.indexOf('orders') === 0}
 								text="Заказы"
 							><Icon28TicketOutline /></TabbarItem>
 							<TabbarItem
-								onClick={() => setActiveStory('support')}
-								selected={activeStory === 'support'}
+								onClick={activeStory.indexOf('support') !== 0 ? () => router.go('support') : null}
+								selected={activeStory.indexOf('support') === 0}
 								text="Поддержка"
 							><Icon28MessagesOutline /></TabbarItem>
 						</Tabbar>}

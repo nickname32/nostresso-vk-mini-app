@@ -24,16 +24,19 @@ import {
     getCoffeehouseMenu,
 } from '../../backend-api'
 
-function CoffeehouseMenu({ id }) {
+import router from '../../router'
+
+function Order({ id, userOrder, setUserOrder }) {
     const [menuItems, setMenuItems] = useState([])
-    const [userOrder, setUserOrder] = useState([])
 
     useEffect(() => {
         const fetchMenu = async () => {
             setMenuItems(await getCoffeehouseMenu())
         }
         fetchMenu()
-    }, [])
+
+        setUserOrder([])
+    }, [setUserOrder])
 
     return (
         <Panel id={id}>
@@ -46,10 +49,11 @@ function CoffeehouseMenu({ id }) {
                 >
                     {menuItems.map(item => (
                         <ContentCard
+                            key={item.title}
                             disabled
                             image={item.image}
-                            subtitle={item.description}
-                            header={item.name}
+                            subtitle={item.subtitle}
+                            header={item.title}
                             text={`${item.price}₽`}
                             caption={<div style={{ display: 'flex' }}>
                                 <Button
@@ -58,7 +62,8 @@ function CoffeehouseMenu({ id }) {
                                     size="m"
                                     before={<Icon24AddOutline />}
                                     onClick={() => {
-                                        setUserOrder([...userOrder, item])
+                                        router.go('coffeehouses.order_add_item', { item: item })
+                                        // setUserOrder([...userOrder, item])
                                     }}
                                 />
                                 {(() => {
@@ -109,20 +114,7 @@ function CoffeehouseMenu({ id }) {
                 >
                     <Div>
                         {(() => {
-                            let summaryPrice = 0
-                            userOrder.forEach(orderItem => {
-                                summaryPrice += orderItem.price
-                            })
-
-                            if (summaryPrice === 0) {
-                                return (
-                                    <Button
-                                        disabled
-                                        stretched
-                                        size="l"
-                                    >Заказ</Button>
-                                )
-                            }
+                            let summaryPrice = 12345
 
                             return (
                                 <Button
@@ -138,8 +130,10 @@ function CoffeehouseMenu({ id }) {
     )
 }
 
-CoffeehouseMenu.propTypes = {
+Order.propTypes = {
     id: PropTypes.string.isRequired,
+    userOrder: PropTypes.array.isRequired,
+    setUserOrder: PropTypes.func.isRequired,
 }
 
-export default CoffeehouseMenu
+export default Order

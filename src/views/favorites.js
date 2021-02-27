@@ -28,7 +28,7 @@ function Favorites({ id }) {
                         />
                     </CardGrid>
 
-                    <Placeholder icon={<Icon56FavoriteOutline />}>Добавьте часто вами посещаемые кофейни в избранное!</Placeholder>
+                    <Placeholder icon={<Icon56FavoriteOutline />}>Добавьте часто посещаемые вами кофейни в избранное!</Placeholder>
                 </Group>
             </Panel>
         </View>

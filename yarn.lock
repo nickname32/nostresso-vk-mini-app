@@ -1926,6 +1926,11 @@
     es6-object-assign "1.1.0"
     svg-baker-runtime "1.4.7"
 
+"@vkontakte/router@^0.0.12":
+  version "0.0.12"
+  resolved "https://registry.yarnpkg.com/@vkontakte/router/-/router-0.0.12.tgz#5b32279549eb1d70f6b84ba7bb915fb34bb24435"
+  integrity sha512-X/Sc2+ByOTC4yhay+l1Izm/dqsk5DYCH0WhILv9mhu9J7vb5Fi3yfflOM1bTVXrRqrUBejvZXqzzljMrmyzbuA==
+
 "@vkontakte/vk-bridge@^2.4.0":
   version "2.4.0"
   resolved "https://registry.yarnpkg.com/@vkontakte/vk-bridge/-/vk-bridge-2.4.0.tgz#99835f34e64585b1267ba3cfb2241155a9ebcc28"

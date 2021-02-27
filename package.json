@@ -12,6 +12,7 @@
     "@babel/runtime": "^7.13.7",
     "@types/react": "^17.0.2",
     "@vkontakte/icons": "^1.79.0",
+    "@vkontakte/router": "^0.0.12",
     "@vkontakte/vk-bridge": "^2.4.0",
     "@vkontakte/vkjs": "^0.20.0",
     "@vkontakte/vkui": "^4.2.0",
