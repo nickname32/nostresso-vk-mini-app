@@ -73,22 +73,22 @@ function App() {
 						activeStory={activeStory}
 						tabbar={<Tabbar>
 							<TabbarItem
-								onClick={activeStory.indexOf('coffeehouses') !== 0 ? () => router.go('coffeehouses') : null}
+								onClick={() => router.go('coffeehouses')}
 								selected={activeStory.indexOf('coffeehouses') === 0}
 								text="Кофейни"
 							><Icon28SearchOutline /></TabbarItem>
 							<TabbarItem
-								onClick={activeStory.indexOf('favorites') !== 0 ? () => router.go('favorites') : null}
+								onClick={() => router.go('favorites')}
 								selected={activeStory.indexOf('favorites') === 0}
 								text="Избранное"
 							><Icon28FavoriteOutline /></TabbarItem>
 							<TabbarItem
-								onClick={activeStory.indexOf('orders') !== 0 ? () => router.go('orders') : null}
+								onClick={() => router.go('orders')}
 								selected={activeStory.indexOf('orders') === 0}
 								text="Заказы"
 							><Icon28TicketOutline /></TabbarItem>
 							<TabbarItem
-								onClick={activeStory.indexOf('support') !== 0 ? () => router.go('support') : null}
+								onClick={() => router.go('support')}
 								selected={activeStory.indexOf('support') === 0}
 								text="Поддержка"
 							><Icon28MessagesOutline /></TabbarItem>

@@ -63,13 +63,12 @@ function Order({ id, userOrder, setUserOrder }) {
                                     before={<Icon24AddOutline />}
                                     onClick={() => {
                                         router.go('coffeehouses.order_add_item', { item: item })
-                                        // setUserOrder([...userOrder, item])
                                     }}
                                 />
                                 {(() => {
                                     let count = 0
                                     userOrder.forEach(orderItem => {
-                                        if (orderItem.name === item.name) {
+                                        if (orderItem.title === item.title) {
                                             count++
                                         }
                                     })
@@ -86,18 +85,18 @@ function Order({ id, userOrder, setUserOrder }) {
                                             size="m"
                                             before={<Icon24ArrowUturnLeftOutline />}
                                             onClick={() => {
-                                                let index = -1
+                                                let lastIndex = -1
                                                 userOrder.forEach((orderItem, orderItemIndex) => {
-                                                    if (orderItem.name === item.name) {
-                                                        index = orderItemIndex
+                                                    if (orderItem.title === item.title) {
+                                                        lastIndex = orderItemIndex
                                                     }
                                                 })
 
-                                                if (index === -1) {
+                                                if (lastIndex === -1) {
                                                     return
                                                 }
 
-                                                setUserOrder([...userOrder.slice(0, index), ...userOrder.slice(index + 1)])
+                                                setUserOrder([...userOrder.slice(0, lastIndex), ...userOrder.slice(lastIndex + 1)])
                                             }}
                                         >{count}</Button>
                                     )
@@ -114,7 +113,17 @@ function Order({ id, userOrder, setUserOrder }) {
                 >
                     <Div>
                         {(() => {
-                            let summaryPrice = 12345
+                            let summaryPrice = 0
+
+                            userOrder.forEach(({ itemOptions }) => {
+                                itemOptions.forEach(({ selectedValues }) => {
+                                    selectedValues.forEach(({ price }) => {
+                                        summaryPrice += price
+                                    })
+                                })
+                            })
+
+                            console.log(summaryPrice)
 
                             return (
                                 <Button

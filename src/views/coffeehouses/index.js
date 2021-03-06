@@ -91,7 +91,57 @@ function Coffeehouses({ id }) {
                             />
                         </Div>
 
-                        <FormLayout>
+                        <FormLayout
+                            onSubmit={(e) => {
+                                e.preventDefault()
+
+                                let itemOptions = []
+
+                                item.options.forEach(optionsBlock => {
+                                    let selectedValues = []
+
+                                    if (optionsBlock.multiple) {
+                                        optionsBlock.values.forEach(optionsValue => {
+                                            e.currentTarget[optionsBlock.title].forEach(checkboxItem => {
+                                                if (optionsValue.title !== checkboxItem.value || !checkboxItem.checked) {
+                                                    return
+                                                }
+
+                                                selectedValues.push({
+                                                    title: optionsValue.title,
+                                                    price: optionsValue.price,
+                                                })
+                                            })
+                                        })
+                                    } else {
+                                        optionsBlock.values.some(optionsValue => {
+                                            if (optionsValue.title !== e.currentTarget[optionsBlock.title].value) {
+                                                return false
+                                            }
+
+                                            selectedValues = [{
+                                                title: optionsValue.title,
+                                                price: optionsValue.price,
+                                            }]
+
+                                            return true
+                                        })
+                                    }
+
+                                    itemOptions.push({
+                                        title: optionsBlock.title,
+                                        selectedValues: selectedValues,
+                                    })
+                                })
+
+                                setUserOrder([...userOrder, {
+                                    title: item.title,
+                                    itemOptions: itemOptions,
+                                }])
+
+                                router.back()
+                            }}
+                        >
                             {item.options.map(optionsBlock => (
                                 <FormItem
                                     key={optionsBlock.title}
@@ -118,12 +168,12 @@ function Coffeehouses({ id }) {
                                 </FormItem>
                             ))}
 
-                            <FormItem>
+                            <Div>
                                 <Button
                                     stretched
                                     size="l"
                                 >Добавить к заказу</Button>
-                            </FormItem>
+                            </Div>
                         </FormLayout>
                     </>)
                 })() : null}
