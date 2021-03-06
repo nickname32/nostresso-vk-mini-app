@@ -28,7 +28,7 @@ import {
 
 import router from '../../router'
 
-function Selection({ id }) {
+function Selection({ id,setUserOrder }) {
     const [activeTab, setActiveTab] = useState('map')
     const [coffeehouses, setCoffeehouses] = useState([])
     const [searchString, setSearchString] = useState('')
@@ -92,7 +92,8 @@ function Selection({ id }) {
                                                 <Avatar
                                                     src={coffeehouse.image}
                                                     onClick={() => {
-                                                        router.go('coffeehouses.order')
+                                                        setUserOrder([])
+                                                        router.go('coffeehouses.menu')
                                                     }}
                                                 />
                                             </Overlay>
@@ -119,7 +120,8 @@ function Selection({ id }) {
                                                 text={coffeehouse.address}
                                                 maxHeight={144}
                                                 onClick={() => {
-                                                    router.go('coffeehouses.order')
+                                                    setUserOrder([])
+                                                    router.go('coffeehouses.menu')
                                                 }}
                                             />
                                         )
@@ -137,6 +139,7 @@ function Selection({ id }) {
 
 Selection.propTypes = {
     id: PropTypes.string.isRequired,
+    setUserOrder: PropTypes.func.isRequired,
 }
 
 export default Selection

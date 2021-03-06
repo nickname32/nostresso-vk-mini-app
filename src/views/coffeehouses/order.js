@@ -1,82 +1,81 @@
-import {
-    useEffect,
-    useState,
-} from 'react'
-
 import PropTypes from 'prop-types'
 
 import {
+    Avatar,
     Button,
-    CardGrid,
-    ContentCard,
-    Div,
-    FixedLayout,
+    CustomSelect,
+    CustomSelectOption,
+    FormItem,
+    FormLayoutGroup,
     Group,
     Panel,
     PanelHeader,
-} from '@vkontakte/vkui'
+    RichCell,
+    Textarea,
+} from "@vkontakte/vkui"
 
 import {
-    Icon24AddOutline, Icon24ArrowUturnLeftOutline,
+    Icon24AddOutline,
+    Icon24ArrowUturnLeftOutline,
 } from '@vkontakte/icons'
 
-import {
-    getCoffeehouseMenu,
-} from '../../backend-api'
-
-import router from '../../router'
-
 function Order({ id, userOrder, setUserOrder }) {
-    const [menuItems, setMenuItems] = useState([])
-
-    useEffect(() => {
-        const fetchMenu = async () => {
-            setMenuItems(await getCoffeehouseMenu())
-        }
-        fetchMenu()
-
-        setUserOrder([])
-    }, [setUserOrder])
-
     return (
         <Panel id={id}>
-            <PanelHeader>Меню кофейни</PanelHeader>
+            <PanelHeader>Заказ</PanelHeader>
 
             <Group>
-                <CardGrid
-                    size="m"
-                    style={{ paddingBottom: 72 }}
-                >
-                    {menuItems.map(item => (
-                        <ContentCard
-                            key={item.title}
+                {(() => {
+                    let countedOrderItems = []
+
+                    userOrder.forEach(orderItem => {
+                        let countedOrderItem = countedOrderItems.find(countedOrderItem => JSON.stringify(countedOrderItem.orderItem) === JSON.stringify(orderItem))
+                        if (!countedOrderItem) {
+                            countedOrderItems.push({
+                                orderItem: orderItem,
+                                count: 1,
+                            })
+                        } else {
+                            countedOrderItem.count++
+                        }
+                    })
+
+                    return countedOrderItems.map(({ orderItem, count }) => (
+                        <RichCell
+                            key={JSON.stringify(orderItem)}
                             disabled
-                            image={item.image}
-                            subtitle={item.subtitle}
-                            header={item.title}
-                            text={`${item.price}₽`}
-                            caption={<div style={{ display: 'flex' }}>
+                            multiline
+                            before={<Avatar size={72} mode="image" src={orderItem.image} />}
+                            text={orderItem.title}
+                            caption={
+                                orderItem.options.map(option => (
+                                    option.title + ': ' + option.selectedValues.map(value => (
+                                        `${value.title} ${value.price}₽`
+                                    )).join(', ')
+                                )).join('; ')
+                            }
+                            after={(() => {
+                                let summaryPrice = 0
+
+                                orderItem.options.forEach(({ selectedValues }) => {
+                                    selectedValues.forEach(({ price }) => {
+                                        summaryPrice += price
+                                    })
+                                })
+
+                                return `${count} × ${summaryPrice}₽ = ${summaryPrice * count}₽`
+                            })()}
+                            actions={<div style={{ display: 'flex' }}>
                                 <Button
                                     stretched
                                     mode="secondary"
                                     size="m"
                                     before={<Icon24AddOutline />}
                                     onClick={() => {
-                                        router.go('coffeehouses.order_add_item', { item: item })
+                                        setUserOrder([...userOrder, orderItem])
                                     }}
                                 />
                                 {(() => {
-                                    let count = 0
-                                    userOrder.forEach(orderItem => {
-                                        if (orderItem.title === item.title) {
-                                            count++
-                                        }
-                                    })
-
-                                    if (count === 0) {
-                                        return null
-                                    }
-
                                     return (
                                         <Button
                                             style={{ marginLeft: 8 }}
@@ -86,8 +85,8 @@ function Order({ id, userOrder, setUserOrder }) {
                                             before={<Icon24ArrowUturnLeftOutline />}
                                             onClick={() => {
                                                 let lastIndex = -1
-                                                userOrder.forEach((orderItem, orderItemIndex) => {
-                                                    if (orderItem.title === item.title) {
+                                                userOrder.forEach((userOrderItem, orderItemIndex) => {
+                                                    if (JSON.stringify(userOrderItem) === JSON.stringify(orderItem)) {
                                                         lastIndex = orderItemIndex
                                                     }
                                                 })
@@ -102,38 +101,54 @@ function Order({ id, userOrder, setUserOrder }) {
                                     )
                                 })()}
                             </div>}
-                            maxHeight={144}
                         />
-                    ))}
-                </CardGrid>
+                    ))
+                })()}
+            </Group>
 
-                <FixedLayout
-                    filled
-                    vertical="bottom"
-                >
-                    <Div>
-                        {(() => {
-                            let summaryPrice = 0
-
-                            userOrder.forEach(({ itemOptions }) => {
-                                itemOptions.forEach(({ selectedValues }) => {
-                                    selectedValues.forEach(({ price }) => {
-                                        summaryPrice += price
+            <Group>
+                <FormLayoutGroup mode="horizontal">
+                    <FormItem top="Ко скольки часам">
+                        <CustomSelect
+                            placeholder="чч"
+                            options={(() => {
+                                let options = []
+                                for (let i = 0; i < 24; i++) {
+                                    options.push({
+                                        label: i < 10 ? '0' + String(i) : String(i),
+                                        value: i,
                                     })
-                                })
-                            })
+                                }
+                                return options
+                            })()}
+                            renderOption={({ option, ...restProps }) => (
+                                <CustomSelectOption {...restProps}>{option.label}</CustomSelectOption>
+                            )}
+                        />
+                    </FormItem>
+                    <FormItem top="Ко скольки минутам">
+                        <CustomSelect
+                            placeholder="мм"
+                            options={(() => {
+                                let options = []
+                                for (let i = 0; i < 60; i++) {
+                                    options.push({
+                                        label: i < 10 ? '0' + String(i) : String(i),
+                                        value: i,
+                                    })
+                                }
+                                return options
+                            })()}
+                            renderOption={({ option, ...restProps }) => (
+                                <CustomSelectOption {...restProps}>{option.label}</CustomSelectOption>
+                            )}
+                        />
+                    </FormItem>
+                </FormLayoutGroup>
 
-                            console.log(summaryPrice)
-
-                            return (
-                                <Button
-                                    stretched
-                                    size="l"
-                                >Заказать за {`${summaryPrice}₽`}</Button>
-                            )
-                        })()}
-                    </Div>
-                </FixedLayout>
+                <FormItem top="Комментарий для баристы">
+                    <Textarea placeholder="Ваши пожелания к заказу" />
+                </FormItem>
             </Group>
         </Panel>
     )

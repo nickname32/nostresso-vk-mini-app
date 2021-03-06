@@ -27,6 +27,7 @@ import vkBridge from '@vkontakte/vk-bridge'
 import {
 	Coffeehouses,
 	Favorites,
+	Support,
 } from './views'
 
 import router from './router'
@@ -96,6 +97,7 @@ function App() {
 					>
 						<Coffeehouses id="coffeehouses" />
 						<Favorites id="favorites" />
+						<Support id="support"></Support>
 					</Epic>
 				</AppRoot>
 			</AdaptivityProvider>

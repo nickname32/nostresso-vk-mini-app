@@ -9,8 +9,9 @@ const routes = [
         name: 'coffeehouses',
         children: [
             { name: 'coffeehouses.selection' },
-            { name: 'coffeehouses.order' },
+            { name: 'coffeehouses.menu' },
             { name: 'coffeehouses.order_add_item', subRoute: true },
+            { name: 'coffeehouses.order' },
         ]
     },
     {

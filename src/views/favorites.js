@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types'
+
 import {
     CardGrid,
     ContentCard,
@@ -33,6 +35,10 @@ function Favorites({ id }) {
             </Panel>
         </View>
     )
+}
+
+Favorites.propTypes = {
+    id: PropTypes.string.isRequired,
 }
 
 export default Favorites

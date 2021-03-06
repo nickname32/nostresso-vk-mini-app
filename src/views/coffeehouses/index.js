@@ -18,6 +18,7 @@ import {
 } from '@vkontakte/vkui'
 
 import Selection from './selection'
+import Menu from './menu'
 import Order from './order'
 
 import router from '../../router'
@@ -31,11 +32,12 @@ function Coffeehouses({ id }) {
 
     useEffect(() => {
         const routerUnsubscribe = router.subscribe(({ toState }) => {
-            console.log(toState)
             let nextActivePanel = toState.page.substring(toState.page.indexOf('.') + 1)
 
             switch (nextActivePanel) {
                 case 'selection':
+                    break
+                case 'menu':
                     break
                 case 'order':
                     break
@@ -95,7 +97,7 @@ function Coffeehouses({ id }) {
                             onSubmit={(e) => {
                                 e.preventDefault()
 
-                                let itemOptions = []
+                                let options = []
 
                                 item.options.forEach(optionsBlock => {
                                     let selectedValues = []
@@ -128,7 +130,7 @@ function Coffeehouses({ id }) {
                                         })
                                     }
 
-                                    itemOptions.push({
+                                    options.push({
                                         title: optionsBlock.title,
                                         selectedValues: selectedValues,
                                     })
@@ -136,7 +138,8 @@ function Coffeehouses({ id }) {
 
                                 setUserOrder([...userOrder, {
                                     title: item.title,
-                                    itemOptions: itemOptions,
+                                    image: item.image,
+                                    options: options,
                                 }])
 
                                 router.back()
@@ -172,7 +175,7 @@ function Coffeehouses({ id }) {
                                 <Button
                                     stretched
                                     size="l"
-                                >Добавить к заказу</Button>
+                                >Добавить в заказ</Button>
                             </Div>
                         </FormLayout>
                     </>)
@@ -183,7 +186,8 @@ function Coffeehouses({ id }) {
 
     return (
         <View id={id} activePanel={activePanel} modal={modal}>
-            <Selection id="selection" />
+            <Selection id="selection" setUserOrder={setUserOrder} />
+            <Menu id="menu" userOrder={userOrder} setUserOrder={setUserOrder} />
             <Order id="order" userOrder={userOrder} setUserOrder={setUserOrder} />
         </View>
     )
