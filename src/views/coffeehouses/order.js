@@ -1,25 +1,46 @@
+import {
+    useState,
+} from 'react'
+
 import PropTypes from 'prop-types'
 
 import {
     Avatar,
     Button,
     CustomSelect,
-    CustomSelectOption,
+    Div,
     FormItem,
+    FormLayout,
     FormLayoutGroup,
+    FormStatus,
     Group,
+    Headline,
     Panel,
     PanelHeader,
     RichCell,
+    Snackbar,
     Textarea,
 } from "@vkontakte/vkui"
 
 import {
+    Icon16ErrorCircle,
     Icon24AddOutline,
     Icon24ArrowUturnLeftOutline,
 } from '@vkontakte/icons'
 
 function Order({ id, userOrder, setUserOrder }) {
+    const [snackbar, setSnackbar] = useState(null)
+
+    let summaryOrderPrice = 0
+
+    userOrder.forEach(({ options }) => {
+        options.forEach(({ selectedValues }) => {
+            selectedValues.forEach(({ price }) => {
+                summaryOrderPrice += price
+            })
+        })
+    })
+
     return (
         <Panel id={id}>
             <PanelHeader>Заказ</PanelHeader>
@@ -104,52 +125,87 @@ function Order({ id, userOrder, setUserOrder }) {
                         />
                     ))
                 })()}
+                <Div>
+                    <Headline style={{ textAlign: 'end' }} weight="regular">Итого {summaryOrderPrice}₽</Headline>
+                </Div>
             </Group>
 
-            <Group>
+            <FormLayout
+                onSubmit={e => {
+                    e.preventDefault()
+                    console.log(e.currentTarget["hours"].value)
+                    console.log(e.currentTarget["minutes"].value)
+                    console.log(e.currentTarget["comment"].value)
+
+                    setSnackbar(<Snackbar
+                        onClose={() => setSnackbar(null)}
+                        before={<Icon16ErrorCircle />}
+                    >
+                        Укажите во сколько вы хотите забрать ваш заказ
+                      </Snackbar>)
+                }}
+            >
+                <FormItem>
+                    <FormStatus
+                        header="Укажите время получения заказа"
+                        mode="default"
+                    >Во сколько вы хотите получить ваш заказ в кофейне?</FormStatus>
+                </FormItem>
                 <FormLayoutGroup mode="horizontal">
-                    <FormItem top="Ко скольки часам">
+                    <FormItem>
                         <CustomSelect
-                            placeholder="чч"
+                            name="hours"
+                            placeholder="часы"
                             options={(() => {
-                                let options = []
+                                let options = [{
+                                    label: null,
+                                    value: -1,
+                                }]
                                 for (let i = 0; i < 24; i++) {
                                     options.push({
-                                        label: i < 10 ? '0' + String(i) : String(i),
+                                        label: String(i),
                                         value: i,
                                     })
                                 }
                                 return options
                             })()}
-                            renderOption={({ option, ...restProps }) => (
-                                <CustomSelectOption {...restProps}>{option.label}</CustomSelectOption>
-                            )}
                         />
                     </FormItem>
-                    <FormItem top="Ко скольки минутам">
+                    <FormItem>
                         <CustomSelect
-                            placeholder="мм"
+                            name="minutes"
+                            placeholder="минуты"
                             options={(() => {
-                                let options = []
+                                let options = [{
+                                    label: null,
+                                    value: -1,
+                                }]
                                 for (let i = 0; i < 60; i++) {
                                     options.push({
-                                        label: i < 10 ? '0' + String(i) : String(i),
+                                        label: (i < 10 ? '0' : '') + String(i),
                                         value: i,
                                     })
                                 }
                                 return options
                             })()}
-                            renderOption={({ option, ...restProps }) => (
-                                <CustomSelectOption {...restProps}>{option.label}</CustomSelectOption>
-                            )}
                         />
                     </FormItem>
                 </FormLayoutGroup>
 
                 <FormItem top="Комментарий для баристы">
-                    <Textarea placeholder="Ваши пожелания к заказу" />
+                    <Textarea name="comment" placeholder="Ваши пожелания к заказу" />
                 </FormItem>
-            </Group>
+
+                <Div>
+                    <Button
+                        disabled={summaryOrderPrice === 0}
+                        stretched
+                        size="l"
+                    >Перейти к оплате</Button>
+                </Div>
+            </FormLayout>
+
+            {snackbar}
         </Panel>
     )
 }
