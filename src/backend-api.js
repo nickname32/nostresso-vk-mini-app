@@ -24,7 +24,7 @@ function getCoffeehouseMenu(id) {
         resolve([{
             title: 'Эспрессо 1',
             subtitle: '100-240 мл., натуральные зёрна',
-            description: 'Зёрна из бразилии действительно правильной обжарки и красивый рисунок на пенке выполненняющийся проффесиональными баристами.',
+            description: 'Зёрна из бразилии действительно правильной обжарки и красивый рисунок на пенке выполненный проффесиональными баристами.',
             image: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.xXEZfA4a9huYl-Oj3PmXOQHaID%26pid%3DApi&f=1',
             price: 120,
             options: [
@@ -67,7 +67,7 @@ function getCoffeehouseMenu(id) {
             id: 2,
             title: 'Эспрессо 2',
             subtitle: '100-240 мл., натуральные зёрна',
-            description: 'Зёрна из бразилии действительно правильной обжарки и красивый рисунок на пенке выполненняющийся проффесиональными баристами.',
+            description: 'Зёрна из бразилии действительно правильной обжарки и красивый рисунок на пенке выполненный проффесиональными баристами.',
             image: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.xXEZfA4a9huYl-Oj3PmXOQHaID%26pid%3DApi&f=1',
             price: 120,
             options: [
@@ -110,7 +110,7 @@ function getCoffeehouseMenu(id) {
             id: 3,
             title: 'Эспрессо 3',
             subtitle: '100-240 мл., натуральные зёрна',
-            description: 'Зёрна из бразилии действительно правильной обжарки и красивый рисунок на пенке выполненняющийся проффесиональными баристами.',
+            description: 'Зёрна из бразилии действительно правильной обжарки и красивый рисунок на пенке выполненный проффесиональными баристами.',
             image: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.xXEZfA4a9huYl-Oj3PmXOQHaID%26pid%3DApi&f=1',
             price: 120,
             options: [
@@ -153,7 +153,7 @@ function getCoffeehouseMenu(id) {
             id: 4,
             title: 'Эспрессо 4',
             subtitle: '100-240 мл., натуральные зёрна',
-            description: 'Зёрна из бразилии действительно правильной обжарки и красивый рисунок на пенке выполненняющийся проффесиональными баристами.',
+            description: 'Зёрна из бразилии действительно правильной обжарки и красивый рисунок на пенке выполненный проффесиональными баристами.',
             image: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.xXEZfA4a9huYl-Oj3PmXOQHaID%26pid%3DApi&f=1',
             price: 120,
             options: [
@@ -196,7 +196,7 @@ function getCoffeehouseMenu(id) {
             id: 5,
             title: 'Эспрессо 5',
             subtitle: '100-240 мл., натуральные зёрна',
-            description: 'Зёрна из бразилии действительно правильной обжарки и красивый рисунок на пенке выполненняющийся проффесиональными баристами.',
+            description: 'Зёрна из бразилии действительно правильной обжарки и красивый рисунок на пенке выполненный проффесиональными баристами.',
             image: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.xXEZfA4a9huYl-Oj3PmXOQHaID%26pid%3DApi&f=1',
             price: 120,
             options: [
@@ -239,7 +239,7 @@ function getCoffeehouseMenu(id) {
             id: 6,
             title: 'Эспрессо 6',
             subtitle: '100-240 мл., натуральные зёрна',
-            description: 'Зёрна из бразилии действительно правильной обжарки и красивый рисунок на пенке выполненняющийся проффесиональными баристами.',
+            description: 'Зёрна из бразилии действительно правильной обжарки и красивый рисунок на пенке выполненный проффесиональными баристами.',
             image: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.xXEZfA4a9huYl-Oj3PmXOQHaID%26pid%3DApi&f=1',
             price: 120,
             options: [
@@ -282,7 +282,7 @@ function getCoffeehouseMenu(id) {
             id: 7,
             title: 'Эспрессо 7',
             subtitle: '100-240 мл., натуральные зёрна',
-            description: 'Зёрна из бразилии действительно правильной обжарки и красивый рисунок на пенке выполненняющийся проффесиональными баристами.',
+            description: 'Зёрна из бразилии действительно правильной обжарки и красивый рисунок на пенке выполненный проффесиональными баристами.',
             image: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.xXEZfA4a9huYl-Oj3PmXOQHaID%26pid%3DApi&f=1',
             price: 120,
             options: [
